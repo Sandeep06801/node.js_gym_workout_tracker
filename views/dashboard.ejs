@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type = "text/javascript" >  
+      function preventBack() { window.history.forward(); }  
+      setTimeout("preventBack()", 0);  
+      window.onunload = function () { null };  
+    </script>
+  <title>User Dashboard</title>
+  <style>
+    body{
+       background-color: white;
+       text-align: center;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    form.inline-form {
+      display: inline;
+      margin-right: 5px;
+    }
+
+    .btn-delete, .btn-edit {
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-add{
+    padding: 5px 10px;
+    background-color: grey;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      align-items: center;
+      margin-top: -10px;
+    }
+
+    .profile-button,
+    .logout-button {
+      padding: 10px 10px;
+      background-color: grey;
+      text-decoration: none;
+      color: white;
+    }
+    .search-form {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .search-input {
+      margin-right: 10px;
+    }
+    .btn{
+    padding: 5px 10px;
+    background-color: grey;
+    color: white;
+    border: none;
+    cursor: pointer;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const deleteButtons = document.querySelectorAll('.btn-delete');
+      
+      deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+          const row = button.closest('tr'); 
+          const workoutId = button.dataset.workoutId; 
+
+          fetch(`/dashboard/workouts/${workoutId}`, { method: 'DELETE' })
+            .then(function(response) {
+              if (response.ok) {
+                row.remove();
+              } else {
+                console.error('Delete request failed');
+              }
+            })
+            .catch(function(error) {
+              console.error('Delete request error:', error);
+            });
+        });
+      });
+    });
+  </script>
+  <script>
+    function WorkoutTypeChange() {
+      var workoutType = document.getElementById("workoutType").value;
+      var workoutNameInput = document.getElementById("workoutName");
+      var repsInput = document.getElementById("reps");
+      var setsInput = document.getElementById("sets");
+
+      if (workoutType === "Rest" || workoutType === "Split-Wise/Rest") {
+        workoutNameInput.disabled = true;
+        repsInput.disabled = true;
+        setsInput.disabled = true;
+        workoutNameInput.value = "Not Attended";
+        repsInput.value = "--";
+        setsInput.value = "--";
+        
+      } else {
+        workoutNameInput.value = "";
+        repsInput.value = "";
+        setsInput.value = "";
+        workoutNameInput.disabled = false;
+        repsInput.disabled = false;
+        setsInput.disabled = false;
+      }
+    }
+  </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.querySelector('.search-form');
+    const searchInput = document.querySelector('.search-input');
+    const tableRows = document.querySelectorAll('table tr:not(:first-child)');
+
+    searchForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const searchTerm = searchInput.value.trim().toLowerCase();
+
+      if (searchTerm === '') {
+        tableRows.forEach(function(row) {
+          row.style.display = 'table-row';
+        });
+      } else {
+        let hasResults = false;
+        tableRows.forEach(function(row) {
+          const rowData = row.textContent.toLowerCase();
+          if (rowData.includes(searchTerm)) {
+            row.style.display = 'table-row';
+            hasResults = true;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+
+        if (!hasResults) {
+          alert('No results found.');
+        }
+      }
+    });
+  });
+</script>
+
+</head>
+<body>
+  <h1>Welcome</h1>
+  <form class="search-form">
+    <input type="text" class="search-input" placeholder="Enter search term">
+    <button type="submit" class="btn">Search</button>
+  </form>
+  <div class="button-container">
+    <a href="/profile" class="profile-button">Profile</a>
+    <a href="/logout" class="logout-button">Logout</a>
+  </div>
+  <h2>Add Your Workouts Here </h2>
+  <form method="POST" action="/dashboard/workouts">
+    <input type="date" name="date" required><br>
+    <select name="workoutType" id="workoutType" onchange="WorkoutTypeChange()" required>
+      <option value="" disabled selected>Select Workout Type</option>
+        <option value="Push">Push</option>
+        <option value="Pull">Pull</option>
+        <option value="Leg">Leg</option>
+        <option value="Cardio">Cardio</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Rest Day">Rest</option>
+        <optgroup label="Split-Wise">
+            <option value="Chest">Split-Wise/Chest</option>
+            <option value="Shoulder and Traps">Split-wise/Shoulder and Traps</option>
+            <option value="Rest">Split-Wise/Rest</option>
+            <option value="Back and Core">Split-Wise/Back and Core</option>
+            <option value="Arms">Split-Wise/Arms</option>
+            <option value="Legs">Split-Wise/Legs</option>
+            <option value="Rest">Split-Wise/Rest</option>
+        </optgroup>        
+    </select><br>    
+    <input type="text" name="workoutName" placeholder="Workout Name" required><br>
+    <input type="number" name="reps" placeholder="Reps" required><br>
+    <input type="number" name="sets" placeholder="Sets" required><br>
+    <br>
+    <button type="submit" class="btn-add">Add Workout</button>
+    <br>
+  </form>
+  
+  <h2>My Workouts</h2>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Workout Type</th>
+      <th>Workout Name</th>
+      <th>Reps</th>
+      <th>Sets</th>
+      <th>Actions</th>
+    </tr>
+    <% workouts.forEach((workout) => { %>
+      <tr>
+        <td><%= workout.date %></td>
+        <td><%= workout.workoutType %></td>
+        <td><%= workout.workoutName %></td>
+        <td><%= workout.reps %></td>
+        <td><%= workout.sets %></td>
+        <td>
+          <form method="POST" action="/dashboard/workouts/<%= workout.id %>?_method=DELETE" class="inline-form">
+            <button type="button" class="btn-delete" data-workout-id="<%= workout.id %>">Delete</button>
+          </form>
+          <a href="/dashboard/workouts/<%= workout.id %>/edit" class="btn-edit">Edit</a>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>

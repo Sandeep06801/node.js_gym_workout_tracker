@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Workout</title>
+  <style>
+    .btn-cancel{
+    padding: 5px 10px;
+    background-color: grey;
+    color: white;
+    border: none;
+    cursor: pointer;
+    }
+
+    .btn{
+    padding: 5px 10px;
+    background-color: grey;
+    color: white;
+    border: none;
+    cursor: pointer;
+    }
+  </style>
+  <script>
+    function WorkoutTypeChange() {
+      var workoutType = document.getElementById("workoutType").value;
+      var workoutNameInput = document.getElementById("workoutName");
+      var repsInput = document.getElementById("reps");
+      var setsInput = document.getElementById("sets");
+
+      if (workoutType === "Rest" || workoutType === "Split-Wise/Rest") {
+        workoutNameInput.value = "Not Attended";
+        repsInput.value = "0";
+        setsInput.value = "0";
+        workoutNameInput.disabled = true;
+        repsInput.disabled = true;
+        setsInput.disabled = true;
+      } else {
+        workoutNameInput.value = "";
+        repsInput.value = "";
+        setsInput.value = "";
+        workoutNameInput.disabled = false;
+        repsInput.disabled = false;
+        setsInput.disabled = false;
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Edit Workout</h1>
+  <form method="POST" action="/dashboard/workouts/<%= workout.id %>?_method=PUT">
+    <input type="date" name="date" value="<%= workout.date %>" required><br>
+    <select name="workoutType" id="workoutType" onchange="WorkoutTypeChange()" required>
+        <option value="" disabled selected>Select Workout Type</option>
+        <option value="Push">Push</option>
+        <option value="Pull">Pull</option>
+        <option value="Leg">Leg</option>
+        <option value="Cardio">Cardio</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Rest">Rest</option>
+        <optgroup label="Split-Wise">
+          <option value="Chest">Split-Wise/Chest</option>
+          <option value="Shoulder and Traps">Split-wise/Shoulder and Traps</option>
+          <option value="Rest">Split-Wise/Rest</option>
+          <option value="Back and Core">Split-Wise/Back and Core</option>
+          <option value="Arms">Split-Wise/Arms</option>
+          <option value="Legs">Split-Wise/Legs</option>
+          <option value="Rest">Split-Wise/Rest</option>
+      </optgroup> 
+    </select><br>
+    <input type="text" name="workoutName" id="workoutName" value="<%= workout.workoutName %>" required><br>
+    <input type="number" name="reps" id="reps" value="<%= workout.reps %>" required><br>
+    <input type="number" name="sets" id="sets" value="<%= workout.sets %>" required><br>
+    <button type="submit" class="btn">Update Workout</button>
+    <input type="button" value="Cancel" class="btn-cancel" onclick="window.location.href='/dashboard'">
+  </form>
+</body>
+</html>

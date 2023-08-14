@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Registration</title>
+  <style>
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Registration</h1>
+  <form method="POST" action="/admin/register">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" placeholder="Enter Username" required><br>
+    <label for="email">Email:</label>
+    <input type="email" name="email" placeholder="Enter Email" required><br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" placeholder="Enter password" required><br>
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter password" required><br>
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>

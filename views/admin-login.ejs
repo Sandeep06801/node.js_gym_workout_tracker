@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <script type = "text/javascript" >  
+    function preventBack() { window.history.forward(); }  
+    setTimeout("preventBack()", 0);  
+    window.onunload = function () { null };  
+  </script>
+  <style>
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      align-items: center;
+      margin-top: -10px;
+    }
+    .user-button {
+      padding: 10px 10px;
+      background-color: grey;
+      text-decoration: none;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="/login" class="user-button">User Login</a>
+    </div>
+  <h1>Admin Login</h1>
+  <form method="POST" action="/admin/login">
+    <label for="username">Username:</label>
+    <input type="text" name="emailOrUsername" placeholder="Email or Username" required><br>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" placeholder="Enter password" required><br>
+    <br>
+    <button type="submit" class="btn">Login</button><br>
+    <p>Forgot Password? <button type="submit" class="btn" onclick="window.location.href='/forgot-password'">Reset Password</button></p>
+    <br>
+  </form>
+</body>
+</html>

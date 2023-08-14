@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Profile</title>
+  <style>
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Edit Profile</h1>
+  <form method="post" action="/profile/edit">
+    <label>Email:</label>
+    <input type="email" name="newEmail" value="<%= user.email %>" required>
+    <label>Username:</label>
+    <input type="text" name="newUsername" value="<%= user.username %>" required>
+    <button type="submit" class="btn">Save</button>
+    <a href="/profile"><button type="submit" class="btn">Cancel</button></a>
+  </form>
+</body>
+</html>

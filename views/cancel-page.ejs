@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cancel Page</title>
+  <script type = "text/javascript" >  
+    function preventBack() { window.history.forward(); }  
+    setTimeout("preventBack()", 0);  
+    window.onunload = function () { null };  
+  </script>
+  <style>
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Forgot Password Cancelled...!</h2>
+  <p>Please select the appropriate login option :- </p>
+  <button type="submit" class="btn" onclick="window.location.href='/admin/login'">Admin Login</button> 
+  <button type="submit" class="btn" onclick="window.location.href='/login'">User Login</button>
+</body>
+</html>

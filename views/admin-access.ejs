@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deletion Error</title>
+  <script type = "text/javascript" >  
+    function preventBack() { window.history.forward(); }  
+    setTimeout("preventBack()", 0);  
+    window.onunload = function () { null };  
+  </script>
+  <style>
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 10px 20px;
+      font-size: 23px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Access Denied , Go Back And Login To Access The Admin Dashboard</h1>
+  
+  <a href="<%= backUrl %>"><button type="submit" class="btn">Go Back To Login</button></a>
+</body>
+</html>

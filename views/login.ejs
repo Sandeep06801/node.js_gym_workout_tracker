@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <script type = "text/javascript" >  
+    function preventBack() { window.history.forward(); }  
+    setTimeout("preventBack()", 0);  
+    window.onunload = function () { null };  
+  </script>
+  <style>
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-Login{
+    padding: 5px 10px;
+    background-color: grey;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .button-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      align-items: center;
+      margin-top: -10px;
+    }
+    .admin-button {
+      padding: 10px 10px;
+      background-color: grey;
+      text-decoration: none;
+      color: white;
+    }
+ </style>
+</head>
+<body>
+  <div class="button-container">
+    <a href="/admin/login" class="admin-button">Admin Login</a>
+  </div>
+</body>
+<body>
+  <h2>To Track Your Workouts</h1>
+  <h2>Let's Get Started</h2>
+  <h2>Login</h2>
+  <form method="POST" action="/login">
+    <input type="text" name="emailOrUsername" placeholder="Email or Username" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <button type="submit" class="btn-Login">Login</button>
+  </form>
+  <p>Forgot your password? <a href="/forgot-password"><button type="submit" class="btn">Reset Password</button></a></p>
+  <p>Don't have an account? <a href="/register"><button type="submit" class="btn">Register</button></a></p>
+</body>
+</html>

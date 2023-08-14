@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <script type = "text/javascript" >  
+    function preventBack() { window.history.forward(); }  
+    setTimeout("preventBack()", 0);  
+    window.onunload = function () { null };  
+  </script>
+
+  <style>
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+      width: 80%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+    body{
+       background-color: whitesmoke;
+       text-align: center;
+    }
+    .btn{
+      padding: 5px 10px;
+      background-color: grey;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .admin-dashboard {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .search-section {
+      margin-bottom: 20px;
+    }
+    .btn-logout {
+        position: absolute;
+        padding: 5px 10px;
+        top: 20px;
+        right: 10px;
+        background-color: grey;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <div class="admin-dashboard">
+    <div class="search-section">
+      <form action="/admin/dashboard/search" method="POST">
+        <input type="text" name="searchQuery" placeholder="Search by ID, Email, or Username">
+        <button type="submit" class="btn">Search</button>
+    </div>
+  </form>
+  <% if (users.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Email</th>
+          <th>Username</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function(user) { %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= user.date_created %></td>
+                <td><%= user.email %></td>
+                <td><%= user.username %></td>
+                <td>
+                    <form action="/admin/user/delete/<%= user.id %>" method="POST">
+                        <button type="submit" class="btn">Delete</button>
+                    </form>
+                </td>
+              </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No users found.</p>
+  <% } %>
+  <br>
+  <a href="/admin/dashboard"><button type="submit" class="btn">back</button></a>
+
+  <a href="/admin/logout"><button type="submit" class="btn-logout">Logout</button></a>
+</body>
+</html>
